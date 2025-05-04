@@ -9,12 +9,18 @@ const nameModal = document.getElementById("nameModal");
 const nameInput = document.getElementById("nameInput");
 const joinBtn = document.getElementById("joinBtn");
 const userList = document.getElementById("userList");
+const startBtn = document.getElementById("start");
+
+let isCallStarted = false;
 
 joinBtn.onclick = () => {
   myName = nameInput.value.trim();
   if (myName) {
     nameModal.style.display = "none";
     socket.emit("set-name", myName);
+    isCallStarted = true;
+    startBtn.disabled = false;
+    M.Modal.getInstance(nameModal).close(); // Close the modal using Materialize JS
   }
 };
 
@@ -30,7 +36,8 @@ navigator.mediaDevices.getUserMedia({ audio: true, video: false })
       audio.id = "remoteAudio";
       document.body.appendChild(audio);
     };
-  });
+  })
+  .catch(err => console.error("Error accessing media devices:", err));
 
 peerConnection.onicecandidate = event => {
   if (event.candidate) {
@@ -38,7 +45,11 @@ peerConnection.onicecandidate = event => {
   }
 };
 
-document.getElementById("start").onclick = async () => {
+startBtn.onclick = async () => {
+  if (!isCallStarted) {
+    alert("Please enter your name and click 'Start Call' first.");
+    return;
+  }
   const offer = await peerConnection.createOffer();
   await peerConnection.setLocalDescription(offer);
   socket.emit("offer", { offer });
@@ -70,14 +81,6 @@ socket.on("user-list", (users) => {
   users.forEach(user => {
     const li = document.createElement("li");
     li.textContent = user.name + (user.id === myId ? " (You)" : "");
-
-    if (user.id !== myId) {
-      const kickBtn = document.createElement("button");
-      kickBtn.innerHTML = `<span class="material-icons">remove_circle</span>`;
-      kickBtn.onclick = () => socket.emit("kick-user", user.id);
-      li.appendChild(kickBtn);
-    }
-
     userList.appendChild(li);
   });
 });
@@ -100,9 +103,4 @@ socket.on("ice-candidate", ({ candidate }) => {
 socket.on("kicked", () => {
   alert("You have been kicked from the chat.");
   window.location.reload();
-});
-
-// Handle errors (like permission for kicking)
-socket.on("error", (data) => {
-  alert(data.message);
 });

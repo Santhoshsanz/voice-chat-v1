@@ -13,46 +13,39 @@ const users = {};
 io.on('connection', (socket) => {
   console.log('User connected:', socket.id);
 
-  // Set the user's name
   socket.on('set-name', (name) => {
     users[socket.id] = { name };
     io.emit('user-list', getUsers());
   });
 
-  // Handle offer
   socket.on('offer', (data) => {
     socket.broadcast.emit('offer', { offer: data.offer, from: socket.id });
   });
 
-  // Handle answer
   socket.on('answer', (data) => {
     io.to(data.to).emit('answer', { answer: data.answer });
   });
 
-  // Handle ICE candidates
   socket.on('ice-candidate', (data) => {
     io.to(data.to).emit('ice-candidate', { candidate: data.candidate });
   });
 
-  // Handle kick-user event
   socket.on('kick-user', (targetId) => {
-    // Check if the user trying to kick is "SanZ"
+    // Only allow 'SanZ' to kick users
     if (users[socket.id].name === "SanZ") {
       io.to(targetId).emit('kicked');
       io.sockets.sockets.get(targetId)?.disconnect();
-      io.emit('user-list', getUsers());  // Update the user list
+      io.emit('user-list', getUsers());
     } else {
       socket.emit('error', { message: 'You do not have permission to kick users.' });
     }
   });
 
-  // Handle disconnection
   socket.on('disconnect', () => {
     delete users[socket.id];
     io.emit('user-list', getUsers());
   });
 
-  // Utility function to get all users
   function getUsers() {
     return Object.entries(users).map(([id, user]) => ({
       id,

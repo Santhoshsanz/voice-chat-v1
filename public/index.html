@@ -1,31 +1,98 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <title>Voice Chat</title>
-        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-        <link rel="stylesheet" href="style.css">
-      </head>
-      
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Voice Chat</title>
+
+  <!-- Material Design Icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  
+  <!-- Materialize CSS (for Material Design components) -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
+
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f0f0f0;
+      flex-direction: column;
+    }
+
+    #nameModal {
+      display: none;
+    }
+
+    .modal {
+      padding: 20px;
+    }
+
+    #userList {
+      list-style-type: none;
+    }
+
+    .modal-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    .btn, .modal-close {
+      width: 100%;
+    }
+
+    #start {
+      margin-top: 20px;
+    }
+
+    #mute {
+      margin-top: 10px;
+    }
+
+    #end {
+      margin-top: 10px;
+    }
+  </style>
+</head>
 <body>
+
+  <!-- Modal Structure -->
   <div id="nameModal" class="modal">
     <div class="modal-content">
-      <h2>Enter your name</h2>
-      <input type="text" id="nameInput" placeholder="Your name" />
-      <button id="joinBtn">Join</button>
+      <h4>Enter Your Name</h4>
+      <input type="text" id="nameInput" class="validate" placeholder="Enter your name" />
+      <button id="joinBtn" class="btn waves-effect waves-light">Join</button>
     </div>
   </div>
 
-  <h1>Voice Chat Room</h1>
-  <div class="controls">
-    <button id="start"><span class="material-icons">call</span></button>
-    <button id="mute"><span class="material-icons">mic</span></button>
-    <button id="end"><span class="material-icons">call_end</span></button>
+  <!-- Main Call UI -->
+  <div id="callContainer">
+    <ul id="userList"></ul>
+    <button id="start" class="btn waves-effect waves-light" disabled>Start Call</button>
+    <button id="mute" class="btn waves-effect waves-light">Mute</button>
+    <button id="end" class="btn waves-effect waves-light red">End Call</button>
   </div>
 
-  <h2>Users:</h2>
-  <ul id="userList" class="user-list"></ul>
-
+  <!-- Scripts -->
   <script src="/socket.io/socket.io.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
   <script src="client.js"></script>
+
+  <script>
+    // Initialize the modal after the document is loaded
+    document.addEventListener('DOMContentLoaded', function() {
+      var elems = document.querySelectorAll('.modal');
+      var instances = M.Modal.init(elems, {
+        startingTop: '10%', // Set the initial position of the modal
+        endingTop: '20%'    // Set the final position of the modal
+      });
+      
+      // Open the modal when the page is loaded
+      instances[0].open();
+    });
+  </script>
 </body>
 </html>

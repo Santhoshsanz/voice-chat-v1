@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Voice Chat</title>
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link rel="stylesheet" href="style.css">
+      </head>
+      
+<body>
+  <div id="nameModal" class="modal">
+    <div class="modal-content">
+      <h2>Enter your name</h2>
+      <input type="text" id="nameInput" placeholder="Your name" />
+      <button id="joinBtn">Join</button>
+    </div>
+  </div>
+
+  <h1>Voice Chat Room</h1>
+  <div class="controls">
+    <button id="start"><span class="material-icons">call</span></button>
+    <button id="mute"><span class="material-icons">mic</span></button>
+    <button id="end"><span class="material-icons">call_end</span></button>
+  </div>
+
+  <h2>Users:</h2>
+  <ul id="userList" class="user-list"></ul>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="client.js"></script>
+</body>
+</html>

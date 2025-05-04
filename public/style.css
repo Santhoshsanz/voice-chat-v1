@@ -1,0 +1,136 @@
+body {
+    font-family: Arial, sans-serif;
+    background: #f0f4f8;
+    color: #333;
+    text-align: center;
+    margin: 0;
+    padding: 2rem;
+  }
+  
+  h1 {
+    margin-bottom: 1rem;
+  }
+  
+  .controls {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin: 1rem 0;
+  }
+  
+  button {
+    background: #1976d2;
+    color: white;
+    border: none;
+    padding: 1rem;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 24px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    transition: background 0.3s ease;
+  }
+  
+  button:hover {
+    background: #0d47a1;
+  }
+  
+  button:disabled {
+    background: #aaa;
+    cursor: not-allowed;
+  }
+  
+  button .material-icons {
+    font-size: 28px;
+  }
+  
+  .user-list {
+    list-style: none;
+    padding: 0;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+  
+  .user-list li {
+    background: white;
+    margin-bottom: 0.5rem;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .user-list button {
+    background: #d32f2f;
+    color: white;
+    font-size: 18px;
+    padding: 0.3rem 0.5rem;
+    border-radius: 6px;
+    margin-left: 1rem;
+  }
+  
+  .user-list button:hover {
+    background: #b71c1c;
+  }
+  
+  .modal {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    background: rgba(0,0,0,0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+  }
+  
+  .modal-content {
+    background: white;
+    padding: 2rem;
+    border-radius: 10px;
+    text-align: center;
+    width: 300px;
+  }
+  
+  .modal-content input {
+    width: 90%;
+    padding: 0.5rem;
+    margin-top: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+  }
+  
+  .modal-content button {
+    background: #43a047;
+    margin-top: 1rem;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+  }
+  
+  button#start {
+    background: #2ecc71;
+  }
+  
+  button#mute  {
+    background: #f39c12;
+  }
+  
+  button#end  {
+    background: #e74c3c;
+  }
+  
+  .user-list button span {
+    color: #c0392b;
+  }
+  
+  button#start:hover span {
+    color: #27ae60;
+  }
+  button#mute:hover span {
+    color: #e67e22;
+  }
+  button#end:hover span {
+    color: #c0392b;
+  }
+  
+  
